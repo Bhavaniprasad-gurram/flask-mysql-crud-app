@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Students{% endblock %}
+{% block content %}
+<h2>All Students</h2>
+{% if students %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Course</th>
+        <th>Actions</th>
+    </tr>
+    {% for s in students %}
+    <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.email }}</td>
+        <td>{{ s.course }}</td>
+        <td>
+            <a href="{{ url_for('edit_student', student_id=s.id) }}">Edit</a>
+            <form action="{{ url_for('delete_student', student_id=s.id) }}" method="post" style="display:inline">
+                <button type="submit" onclick="return confirm('Delete this student?')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No students yet. <a href="{{ url_for('add_student') }}">Add the first student</a>.</p>
+{% endif %}
+{% endblock %}
